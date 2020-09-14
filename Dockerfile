@@ -21,7 +21,7 @@ COPY . /var/www
 RUN chown -R www-data:www-data /var/www
 
 RUN usermod -u 1000 www-data
-USER www-data
+# USER www-data
 
 EXPOSE 9000
 
