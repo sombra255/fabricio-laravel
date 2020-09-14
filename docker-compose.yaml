@@ -3,22 +3,32 @@ services:
   app:
     build: .
     container_name: app
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 40s ./.docker/entrypoint.sh
     volumes:
-      - ./:/var/www
+      - .:/var/www
     networks:
-      - app-network      
+      - app-network
+    depends_on: 
+      - db
+      - redis      
 
   nginx:
     build: ./.docker/nginx
     restart: always
     container_name: nginx
+    entrypoint: dockerize -template /tmp/nginx-template.conf:/etc/nginx/conf.d/nginx.conf -wait tcp://app:9000 -timeout 40s /var/www/.docker/nginx/entrypoint.sh
+    environment:
+      - NGINX_APP=app
+      - NGINX_PORT=9000
     tty: true
     ports:
       - "8000:80"
     volumes:
       - .:/var/www
     networks:
-      - app-network    
+      - app-network
+    depends_on:
+      - app    
 
   redis:
     image: redis:alpine
