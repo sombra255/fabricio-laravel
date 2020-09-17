@@ -5,9 +5,9 @@ steps:
 - name: 'docker/compose:1.19.0'
   args: ['up', '-d', '--build']
 # Push the container image to Container Registry
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: ['push', 'gcr.io/fast-art-289820/laravel-fullcycle']
-# # Deploy container image to Cloud Run
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/fast-art-289820/laravel-fullcycle']
+# Deploy container image to Cloud Run
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   entrypoint: gcloud
 #   args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/laravel-fullcycle', '--region', 'us-central1', '--platform', 'managed']
