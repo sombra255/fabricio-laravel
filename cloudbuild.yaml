@@ -8,6 +8,6 @@ steps:
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/laravel-fullcycle', '--region', 'REGION', '--platform', 'managed']
+  args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/laravel-fullcycle', '--region', 'us-central1', '--platform', 'managed']
 images:
 - gcr.io/fast-art-289820/laravel-fullcycle
