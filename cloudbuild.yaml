@@ -5,8 +5,8 @@ steps:
   args: ['up', '-d', '--build']
 
 #Step 1
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag', 'workspace_app:latest', 'gcr.io/fast-art-289820/app:$SHORT_SHA']
+- name: 'docker'
+  args: ['push', 'gcr.io/fast-art-289820/workspace_app:latest']
 
 #Step 2
 - name: 'docker/compose:1.19.0'
@@ -27,5 +27,3 @@ steps:
 #Step 6
 - name: 'docker/compose:1.19.0'
   args: ['exec', 'app', 'bash','php','artisan','test','--group=feature','--stop-on-failure']
-
-images: ['gcr.io/fast-art-289820/app:$SHORT_SHA']
