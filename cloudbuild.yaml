@@ -3,7 +3,7 @@ steps:
 # - name: 'gcr.io/cloud-builders/docker'
   # args: ['build', '-t', 'gcr.io/fast-art-289820/laravel-fullcycle', '.']
 - name: 'docker/compose:1.19.0'
-  args: ['up', '-d', '--build']
+  args: ['up', '-d']
 # Push the container image to Container Registry
 # - name: 'gcr.io/cloud-builders/docker'
 #   args: ['push', 'gcr.io/fast-art-289820/laravel-fullcycle']
