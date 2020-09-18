@@ -8,8 +8,8 @@ steps:
 # - name: 'gcr.io/cloud-builders/docker'
 #   args: ['push', 'gcr.io/fast-art-289820/laravel-fullcycle']
 - name: 'gcr.io/cloud-builders/docker' 
-  args: ['tag' , 'app:latest', 'gcr.io/fast-art-289820/fabricio-laravel:$COMMIT_SHA'] 
-images: ['gcr.io/fast-art-289820/fabricio-laravel:$COMMIT_SHA']
+  args: ['tag' , 'workspace_app:latest', 'gcr.io/fast-art-289820/app:$COMMIT_SHA'] 
+images: ['gcr.io/fast-art-289820/app:$COMMIT_SHA']
 # Deploy container image to Cloud Run
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   entrypoint: gcloud
