@@ -4,19 +4,19 @@ steps:
   args: ['up', '-d', '--build']
 
 - name: 'docker'
-  args: ['exec', 'app', 'bash','composer','install']
+  args: ['exec', 'app', 'composer','install']
 
 - name: 'docker'
-  args: ['exec', 'app', 'bash','cp','/var/www/.env.example','/var/www/.env']
+  args: ['exec', 'app', 'cp','/var/www/.env.example','/var/www/.env']
 
 - name: 'docker'
-  args: ['exec', 'app', 'bash','php','artisan','key:generate']
+  args: ['exec', 'app', 'php','artisan','key:generate']
 
 - name: 'docker'
-  args: ['exec', 'app', 'bash','php','artisan','migrate']
+  args: ['exec', 'app', 'php','artisan','migrate']
 
 - name: 'docker'
-  args: ['exec', 'app', 'bash','php','artisan','test','--group=feature','--stop-on-failure']
+  args: ['exec', 'app', 'php','artisan','test','--group=feature','--stop-on-failure']
 
 # Push the new image to the registry.
 images: ['gcr.io/fast-art-289820/workspace_app:latest']
