@@ -1,23 +1,30 @@
 steps:
 
+#STEP 0
 - name: 'docker/compose:1.26.2'
   args: ['up', '-d', '--build']
 
+#STEP 1
 - name: 'gcr.io/cloud-builders/docker'
   args: ['tag', 'workspace_app:latest', 'gcr.io/fast-art-289820/workspace_app:$SHORT_SHA']
 
+#STEP 2
 - name: 'docker'
   args: ['exec', 'app', 'composer','install']
 
+#STEP 3
 - name: 'docker'
   args: ['exec', 'app', 'cp','/var/www/.env.example','/var/www/.env']
 
+#STEP 4
 - name: 'docker'
   args: ['exec', 'app', 'php','artisan','key:generate']
 
+#STEP 5
 - name: 'docker'
   args: ['exec', 'app', 'php','artisan','migrate']
 
+#STEP 6
 - name: 'docker'
   args: ['exec', 'app', 'php','artisan','test','--group=feature','--stop-on-failure']
 
