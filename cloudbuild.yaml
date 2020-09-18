@@ -7,8 +7,6 @@ steps:
 #Step 1
 - name: 'gcr.io/cloud-builders/docker'
   args: ['tag', 'workspace_app:latest', 'gcr.io/fast-art-289820/app:$SHORT_SHA']
-
-# Push the new image to the registry.
   images: ['gcr.io/fast-art-289820/app:$SHORT_SHA']
 
 #Step 2
