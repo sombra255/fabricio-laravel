@@ -15,4 +15,4 @@ images: ['gcr.io/fast-art-289820/app:$COMMIT_SHA']
 #   entrypoint: gcloud
 #   args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/laravel-fullcycle', '--region', 'us-central1', '--platform', 'managed']
 # images:
-# - gcr.io/fast-art-289820/laravel-fullcycle
+# - gcr.io/fast-art-289820/laravel-fullcycle 
