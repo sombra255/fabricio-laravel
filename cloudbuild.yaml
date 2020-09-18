@@ -1,7 +1,7 @@
 steps:
   # Build the new docker image.
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/fast-art-289820/gcb-docker-compose:latest', '.']
+  args: ['build', '-t', 'gcr.io/fast-art-289820/gcb-docker-compose:$SHORT_SHA', '.']
 # Build the container image
 # - name: 'gcr.io/cloud-builders/docker'
   # args: ['build', '-t', 'gcr.io/fast-art-289820/laravel-fullcycle', '.']
@@ -15,14 +15,18 @@ steps:
 # - name: 'gcr.io/cloud-builders/docker'
 #   args: ['push', 'gcr.io/fast-art-289820/laravel-fullcycle']
 
+# Pushing image to gcr
+- name: 'docker'
+  args: ['push', 'gcr.io/fast-art-289820/gcb-docker-compose:$SHORT_SHA']
+
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/gcb-docker-compose:latest', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+  args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/gcb-docker-compose:$SHORT_SHA', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
   env:
   - 'HOST=nginx' # running container, container_name defined in the docker-compose.yml
   - 'PORT=8080'
 
-# Push the new image to the registry.
-images: ['gcr.io/fast-art-289820/gcb-docker-compose:latest']
+# # Push the new image to the registry.
+# images: ['gcr.io/fast-art-289820/gcb-docker-compose:latest']
 
 # Deploy container image to Cloud Run
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
