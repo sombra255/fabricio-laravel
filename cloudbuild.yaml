@@ -1,32 +1,22 @@
 steps:
-# Build the new docker image.
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/fast-art-289820/workspace_app:latest', '.']
 
-#Step 0
-- name: 'docker/compose:1.19.0'
+- name: 'docker/compose:1.26.2'
   args: ['up', '-d', '--build']
 
-#Step 1
 - name: 'docker'
-  args: ['push', 'gcr.io/fast-art-289820/workspace_app:latest']
+  args: ['push', 'workspace_app:latest']
 
-#Step 2
-- name: 'docker/compose:1.19.0'
-  args: ['exec', 'app', 'bash','composer','install']
+- name: 'docker'
+  args: ['exec', 'workspace_app', 'bash','composer','install']
 
-#Step 3
-- name: 'docker/compose:1.19.0'
-  args: ['exec', 'app', 'bash','cp','/var/www/.env.example','/var/www/.env']
+- name: 'docker'
+  args: ['exec', 'workspace_app', 'bash','cp','/var/www/.env.example','/var/www/.env']
 
-#Step 4
-- name: 'docker/compose:1.19.0'
-  args: ['exec', 'app', 'bash','php','artisan','key:generate']
+- name: 'docker'
+  args: ['exec', 'workspace_app', 'bash','php','artisan','key:generate']
 
-#Step 5
-- name: 'docker/compose:1.19.0'
-  args: ['exec', 'app', 'bash','php','artisan','migrate']
+- name: 'docker'
+  args: ['exec', 'workspace_app', 'bash','php','artisan','migrate']
 
-#Step 6
-- name: 'docker/compose:1.19.0'
-  args: ['exec', 'app', 'bash','php','artisan','test','--group=feature','--stop-on-failure']
+- name: 'docker'
+  args: ['exec', 'workspace_app', 'bash','php','artisan','test','--group=feature','--stop-on-failure']
