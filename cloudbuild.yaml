@@ -5,16 +5,18 @@ steps:
 # Build the container image
 # - name: 'gcr.io/cloud-builders/docker'
   # args: ['build', '-t', 'gcr.io/fast-art-289820/laravel-fullcycle', '.']
-- name: 'docker/compose:1.19.0'
-  args: ['up', '-d', '--build']
-  env:
-  - 'PROJECT_ID=$PROJECT_ID'
+
+# - name: 'docker/compose:1.19.0'
+#   args: ['up', '-d', '--build']
+#   env:
+#   - 'PROJECT_ID=$PROJECT_ID'
+
 # Push the container image to Container Registry
 # - name: 'gcr.io/cloud-builders/docker'
 #   args: ['push', 'gcr.io/fast-art-289820/laravel-fullcycle']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'gcb-docker-compose:latest', '--image', 'gcr.io/fast-art-289820/gcb-docker-compose:latest', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+  args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/gcb-docker-compose:latest', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
   env:
   - 'HOST=nginx' # running container, container_name defined in the docker-compose.yml
   - 'PORT=8080'
