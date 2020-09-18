@@ -1,15 +1,15 @@
 steps:
+# Build the new docker image.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/fast-art-289820/workspace_app:latest', '.']
 
 #Step 0
 - name: 'docker/compose:1.19.0'
   args: ['up', '-d', '--build']
 
 #Step 1
-- name: 'gcr.io/cloud-builders/docker'
+- name: 'docker'
   args: ['push', 'gcr.io/fast-art-289820/workspace_app:latest']
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: ['tag', 'workspace_app:latest', 'gcr.io/fast-art-289820/workspace_app:latest']
-# images: ['gcr.io/fast-art-289820/workspace_app:latest']
 
 #Step 2
 - name: 'docker/compose:1.19.0'
