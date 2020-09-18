@@ -3,6 +3,9 @@ steps:
 - name: 'docker/compose:1.26.2'
   args: ['up', '-d', '--build']
 
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'workspace_app:latest', 'gcr.io/fast-art-289820/workspace_app:$SHORT_SHA']
+
 - name: 'docker'
   args: ['exec', 'app', 'composer','install']
 
@@ -19,4 +22,4 @@ steps:
   args: ['exec', 'app', 'php','artisan','test','--group=feature','--stop-on-failure']
 
 # Push the new image to the registry.
-images: ['gcr.io/fast-art-289820/workspace_app:latest']
+images: ['gcr.io/fast-art-289820/workspace_app:$SHORT_SHA']
