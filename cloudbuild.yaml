@@ -1,18 +1,24 @@
 steps:
+  # Build the new docker image.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/fast-art-289820/gcb-docker-compose:latest', '.']
 # Build the container image
 # - name: 'gcr.io/cloud-builders/docker'
   # args: ['build', '-t', 'gcr.io/fast-art-289820/laravel-fullcycle', '.']
 - name: 'docker/compose:1.19.0'
-  args: ['up', '-d']
+  args: ['up', '-d', '--build']
+  env:
+  - 'PROJECT_ID=$PROJECT_ID'
 # Push the container image to Container Registry
 # - name: 'gcr.io/cloud-builders/docker'
 #   args: ['push', 'gcr.io/fast-art-289820/laravel-fullcycle']
-- name: 'gcr.io/cloud-builders/docker' 
-  args: ['tag' , 'workspace_app:latest', 'gcr.io/fast-art-289820/app:$COMMIT_SHA'] 
-images: ['gcr.io/fast-art-289820/app:$COMMIT_SHA']
+
+# Push the new image to the registry.
+images: ['gcr.io/fast-art-289820/gcb-docker-compose:latest']
+
 # Deploy container image to Cloud Run
 # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
 #   entrypoint: gcloud
 #   args: ['run', 'deploy', 'fabricio-laravel', '--image', 'gcr.io/fast-art-289820/laravel-fullcycle', '--region', 'us-central1', '--platform', 'managed']
 # images:
-# - gcr.io/fast-art-289820/laravel-fullcycle 
+# - gcr.io/fast-art-289820/laravel-fullcycle
