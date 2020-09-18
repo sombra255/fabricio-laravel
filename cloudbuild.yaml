@@ -4,9 +4,6 @@ steps:
   args: ['up', '-d', '--build']
 
 - name: 'docker'
-  args: ['push', 'workspace_app:latest']
-
-- name: 'docker'
   args: ['exec', 'workspace_app', 'bash','composer','install']
 
 - name: 'docker'
@@ -20,3 +17,6 @@ steps:
 
 - name: 'docker'
   args: ['exec', 'workspace_app', 'bash','php','artisan','test','--group=feature','--stop-on-failure']
+
+# Push the new image to the registry.
+images: ['gcr.io/fast-art-289820/workspace_app:latest']
