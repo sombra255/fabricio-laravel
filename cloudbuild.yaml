@@ -5,8 +5,11 @@ steps:
   args: ['up', '-d', '--build']
 
 #Step 1
-- name: 'docker'
+- name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/fast-art-289820/workspace_app:latest']
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['tag', 'workspace_app:latest', 'gcr.io/fast-art-289820/workspace_app:latest']
+# images: ['gcr.io/fast-art-289820/workspace_app:latest']
 
 #Step 2
 - name: 'docker/compose:1.19.0'
