@@ -57,7 +57,7 @@ steps:
   args:
     - 'apply'
     - '-f'
-    - 'k8s/app/deployment-new.yaml'
+    - 'k8s/app/app-deployment-new.yaml'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-laravel' # nome do cluster
