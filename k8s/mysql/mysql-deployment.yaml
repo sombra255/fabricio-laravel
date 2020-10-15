@@ -4,10 +4,12 @@ metadata:
   name: mysql-deployment
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: mysql-deployment
       tier: db
+
   template:
     metadata:
       labels:
@@ -17,6 +19,8 @@ spec:
       containers:
       - name: mysql-deployment
         image: mysql:5.7
+        args:
+            - "--ignore-db-dir=lost+found"
         resources:
           limits:
             memory: "256Mi"

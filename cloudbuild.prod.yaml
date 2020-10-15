@@ -51,13 +51,13 @@ steps:
       sed 's#img-app-deployment#gcr.io/$PROJECT_ID/workspace_app:$SHORT_SHA#g' k8s/app/app-deployment.yaml > k8s/app/app-deployment-new.yaml;
       cat k8s/app/app-deployment-new.yaml;
 
-#deploying k8s
-# - id: Deploying k8s
-#   name: 'gcr.io/cloud-builders/kubectl'
-#   args:
-#     - 'apply'
-#     - '-f'
-#     - 'k8s/app/deployment-new.yaml'
-#   env:
-#   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
-#   - 'CLOUDSDK_CONTAINER_CLUSTER=nome do cluster' # nome do cluster
+# deploying k8s
+- id: Deploying k8s
+  name: 'gcr.io/cloud-builders/kubectl'
+  args:
+    - 'apply'
+    - '-f'
+    - 'k8s/app/deployment-new.yaml'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-laravel' # nome do cluster
