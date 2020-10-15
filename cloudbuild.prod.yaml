@@ -1,0 +1,63 @@
+steps:
+
+#STEP 0
+- name: 'docker/compose:1.26.2'
+  args: ['up', '-d', '--build']
+
+#STEP 1
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ['tag', 'workspace_app:latest', 'gcr.io/fast-art-289820/workspace_app:$SHORT_SHA']
+
+#STEP 2
+- name: 'docker'
+  args: ['exec', 'app', 'composer','install']
+
+#STEP 3
+- name: 'docker'
+  args: ['exec', 'app', 'cp','/var/www/.env.example','/var/www/.env']
+
+#STEP 4
+- name: 'docker'
+  args: ['exec', 'app', 'php','artisan','key:generate']
+
+#STEP 5
+- name: 'docker'
+  args: ['exec', 'app', 'php','artisan','migrate']
+
+#STEP 6
+- name: 'docker'
+  args: ['exec', 'app', 'php','artisan','test','--group=feature','--stop-on-failure']
+
+# Push the new image to the registry.
+# images: ['gcr.io/fast-art-289820/workspace_app:$SHORT_SHA']
+
+#Building image
+- id: Building image
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/workspace_app:$SHORT_SHA', '-f', 'Dockerfile.prod', '.']
+
+#push image
+- id: Push image
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/workspace_app:$SHORT_SHA']
+
+#adjusting file k8s
+- id: Adjusting file k8s
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: '/bin/sh'
+  args: 
+    - '-c'
+    - |
+      sed 's#img-app-deployment#gcr.io/$PROJECT_ID/workspace_app:$SHORT_SHA#g' k8s/app/app-deployment.yaml > k8s/app/app-deployment-new.yaml;
+      cat k8s/app/app-deployment-new.yaml;
+
+#deploying k8s
+# - id: Deploying k8s
+#   name: 'gcr.io/cloud-builders/kubectl'
+#   args:
+#     - 'apply'
+#     - '-f'
+#     - 'k8s/app/deployment-new.yaml'
+#   env:
+#   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+#   - 'CLOUDSDK_CONTAINER_CLUSTER=nome do cluster' # nome do cluster
