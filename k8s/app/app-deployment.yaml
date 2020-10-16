@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: app
-        image: img-app-deployment
-        command: ["/bin/sh", "-c", "ln -s /var/www /usr/share/nginx;", "/var/www/k8s/entrypoint.sh; php-fpm;"]
+        image: gcr.io/fast-art-289820/workspace_app:f6219c2
+        command: ["/bin/sh", "-c", "ln -s /var/www /usr/share/nginx; /var/www/k8s/entrypoint.sh; php-fpm;"]
         resources:
           limits:
             memory: "128Mi"
